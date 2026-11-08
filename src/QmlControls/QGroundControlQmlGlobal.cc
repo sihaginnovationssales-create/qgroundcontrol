@@ -324,7 +324,8 @@ QString QGroundControlQmlGlobal::telemetryFileExtension() const
 
 QString QGroundControlQmlGlobal::appName()
 {
-    return QCoreApplication::applicationName();
+    // Display name defaults to applicationName(); custom builds may set a friendlier one.
+    return QGuiApplication::applicationDisplayName();
 }
 
 QObject* QGroundControlQmlGlobal::serialPortManager() const

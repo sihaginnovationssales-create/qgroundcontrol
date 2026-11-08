@@ -80,7 +80,7 @@ jobs:
 
     env:
       BUILD_TYPE: ${{ inputs.build_type || 'Release' }}
-      PACKAGE: QGroundControl
+      PACKAGE: TwelveArmoured
       QT_ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/deploy/android/android_release.keystore
       QT_ANDROID_KEYSTORE_ALIAS: QGCAndroidKeyStore
       # Same-repo PRs (including Renovate) would otherwise receive the release keystore password;
@@ -202,7 +202,7 @@ jobs:
             ${{ runner.temp }}/build/qgc-build-retry.log
             ${{ runner.temp }}/build/CMakeFiles/CMakeConfigureLog.yaml
             ${{ runner.temp }}/build/.ninja_log
-            ${{ runner.temp }}/build/android-QGroundControl-deployment-settings.json
+            ${{ runner.temp }}/build/android-TwelveArmoured-deployment-settings.json
           if-no-files-found: ignore
           retention-days: 7
 
@@ -284,7 +284,7 @@ jobs:
         uses: ./.github/actions/android-emulator-test
         with:
           apk-path: ${{ runner.temp }}/build/${{ env.PACKAGE }}.apk
-          package: org.mavlink.qgroundcontrol
+          package: com.twelvearmoured.groundcontrol
           android-platform: ${{ steps.setup.outputs.android_platform }}
           diagnostics-name: ${{ matrix.host }}
 

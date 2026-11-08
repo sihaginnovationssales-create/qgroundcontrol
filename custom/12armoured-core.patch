@@ -1,0 +1,67 @@
+diff --git a/.github/workflows/android.yml b/.github/workflows/android.yml
+index e525307..62da5bf 100644
+--- a/.github/workflows/android.yml
++++ b/.github/workflows/android.yml
+@@ -80,7 +80,7 @@ jobs:
+ 
+     env:
+       BUILD_TYPE: ${{ inputs.build_type || 'Release' }}
+-      PACKAGE: QGroundControl
++      PACKAGE: TwelveArmoured
+       QT_ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/deploy/android/android_release.keystore
+       QT_ANDROID_KEYSTORE_ALIAS: QGCAndroidKeyStore
+       # Same-repo PRs (including Renovate) would otherwise receive the release keystore password;
+@@ -202,7 +202,7 @@ jobs:
+             ${{ runner.temp }}/build/qgc-build-retry.log
+             ${{ runner.temp }}/build/CMakeFiles/CMakeConfigureLog.yaml
+             ${{ runner.temp }}/build/.ninja_log
+-            ${{ runner.temp }}/build/android-QGroundControl-deployment-settings.json
++            ${{ runner.temp }}/build/android-TwelveArmoured-deployment-settings.json
+           if-no-files-found: ignore
+           retention-days: 7
+ 
+@@ -284,7 +284,7 @@ jobs:
+         uses: ./.github/actions/android-emulator-test
+         with:
+           apk-path: ${{ runner.temp }}/build/${{ env.PACKAGE }}.apk
+-          package: org.mavlink.qgroundcontrol
++          package: com.twelvearmoured.groundcontrol
+           android-platform: ${{ steps.setup.outputs.android_platform }}
+           diagnostics-name: ${{ matrix.host }}
+ 
+diff --git a/src/QGCApplication.cc b/src/QGCApplication.cc
+index a144fcf..33912ba 100644
+--- a/src/QGCApplication.cc
++++ b/src/QGCApplication.cc
+@@ -353,7 +353,7 @@ void QGCApplication::_initForNormalAppBoot()
+     if (_settingsUpgraded) {
+         showAppMessage(tr("The format for %1 saved settings has been modified. "
+                           "Your saved settings have been reset to defaults.")
+-                           .arg(applicationName()));
++                           .arg(applicationDisplayName()));
+     }
+ 
+     // Connect links with flag AutoconnectLink
+@@ -429,7 +429,7 @@ void QGCApplication::showCriticalVehicleMessage(const QString& message)
+ 
+ void QGCApplication::showAppMessage(const QString& message, const QString& title)
+ {
+-    const QString dialogTitle = title.isEmpty() ? applicationName() : title;
++    const QString dialogTitle = title.isEmpty() ? applicationDisplayName() : title;
+ 
+     if (runningUnitTests()) {
+         // Logged under QGCAppMessageLog so tests can assert expected dialogs via
+diff --git a/src/QmlControls/QGroundControlQmlGlobal.cc b/src/QmlControls/QGroundControlQmlGlobal.cc
+index 865a9c2..bcf94db 100644
+--- a/src/QmlControls/QGroundControlQmlGlobal.cc
++++ b/src/QmlControls/QGroundControlQmlGlobal.cc
+@@ -324,7 +324,8 @@ QString QGroundControlQmlGlobal::telemetryFileExtension() const
+ 
+ QString QGroundControlQmlGlobal::appName()
+ {
+-    return QCoreApplication::applicationName();
++    // Display name defaults to applicationName(); custom builds may set a friendlier one.
++    return QGuiApplication::applicationDisplayName();
+ }
+ 
+ QObject* QGroundControlQmlGlobal::serialPortManager() const

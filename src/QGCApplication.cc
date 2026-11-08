@@ -353,7 +353,7 @@ void QGCApplication::_initForNormalAppBoot()
     if (_settingsUpgraded) {
         showAppMessage(tr("The format for %1 saved settings has been modified. "
                           "Your saved settings have been reset to defaults.")
-                           .arg(applicationName()));
+                           .arg(applicationDisplayName()));
     }
 
     // Connect links with flag AutoconnectLink
@@ -429,7 +429,7 @@ void QGCApplication::showCriticalVehicleMessage(const QString& message)
 
 void QGCApplication::showAppMessage(const QString& message, const QString& title)
 {
-    const QString dialogTitle = title.isEmpty() ? applicationName() : title;
+    const QString dialogTitle = title.isEmpty() ? applicationDisplayName() : title;
 
     if (runningUnitTests()) {
         // Logged under QGCAppMessageLog so tests can assert expected dialogs via
