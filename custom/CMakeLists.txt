@@ -19,10 +19,18 @@ if(ANDROID)
         # Recreate the merge so removed source files cannot remain stale.
         file(REMOVE_RECURSE "${FINAL_ANDROID_DIR}")
         file(COPY "${DEFAULT_ANDROID_DIR}/" DESTINATION "${FINAL_ANDROID_DIR}")
-        file(COPY "${CUSTOM_ANDROID_DIR}/" DESTINATION "${FINAL_ANDROID_DIR}")
 
-        # Re-run configure when an overlay file changes.
-        file(GLOB_RECURSE _12a_android_files CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE "${CUSTOM_ANDROID_DIR}/*")
+        # Overlay file by file with COPY_FILE: file(COPY) skips a file whose destination has
+        # the same timestamp, which is the case for every file in a fresh CI checkout, so
+        # overlay files replacing upstream ones (manifest, icon XML, colors) were dropped.
+        # CONFIGURE_DEPENDS also re-runs configure when an overlay file changes.
+        file(GLOB_RECURSE _12a_android_files CONFIGURE_DEPENDS LIST_DIRECTORIES FALSE
+            RELATIVE "${CUSTOM_ANDROID_DIR}" "${CUSTOM_ANDROID_DIR}/*")
+        foreach(_12a_file IN LISTS _12a_android_files)
+            get_filename_component(_12a_dest_dir "${FINAL_ANDROID_DIR}/${_12a_file}" DIRECTORY)
+            file(MAKE_DIRECTORY "${_12a_dest_dir}")
+            file(COPY_FILE "${CUSTOM_ANDROID_DIR}/${_12a_file}" "${FINAL_ANDROID_DIR}/${_12a_file}")
+        endforeach()
 
         set(QGC_ANDROID_PACKAGE_SOURCE_DIR "${FINAL_ANDROID_DIR}")
         set(QGC_ANDROID_PACKAGE_SOURCE_DIR "${FINAL_ANDROID_DIR}" PARENT_SCOPE)
