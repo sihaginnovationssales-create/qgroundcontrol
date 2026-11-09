@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: TwelveArmoured-mac-arm64-v8a
-          run-id: 42454916987
+          name: TwelveArmoured-windows-arm64-v8a
+          run-id: 42652422026
           github-token: ${{ github.token }}
           path: art
       - name: Dump icon resources
@@ -25,12 +25,13 @@ jobs:
           APK=$(find art -name '*.apk' | head -1)
           AAPT2=$(ls -d "$ANDROID_HOME"/build-tools/*/aapt2 | sort -V | tail -1)
           "$AAPT2" dump badging "$APK" | grep -E "^package|application-label|application-icon|launchable"
-          "$AAPT2" dump resources "$APK" | grep -A4 -E "ic_launcher|/icon |ic_launcher_foreground_img" | head -80
+          "$AAPT2" dump resources "$APK" | grep -A4 -E "ic_launcher|/icon |ic_launcher_foreground_img" | head -120
           "$AAPT2" dump xmltree --file AndroidManifest.xml "$APK" | grep -iE "icon|label" | head
           mkdir x && cd x && unzip -q "../$APK"
           for f in $("$AAPT2" dump resources "../$APK" | grep -oE '\(xxxhdpi\) \(file\) [^ ]+' | awk '{print $3}'); do echo "== $f"; ls -la "$f"; done
           for f in $("$AAPT2" dump resources "../$APK" | grep -A8 -E "mipmap/ic_launcher|drawable/ic_launcher_foreground " | grep -oE '\(file\) [^ ]+\.xml' | awk '{print $2}' | sort -u); do echo "== XML $f"; "$AAPT2" dump xmltree --file "$f" "../$APK"; done
           FG=$("$AAPT2" dump resources "../$APK" | grep -A8 "ic_launcher_foreground_img" | grep -oE '\(xxxhdpi\) \(file\) [^ ]+' | awk '{print $3}' | head -1)
           echo "== FOREGROUND $FG"; [ -n "$FG" ] && base64 -w0 "$FG" && echo
-          LEG=$("$AAPT2" dump resources "../$APK" | grep -A8 "mipmap/ic_launcher " | grep -oE '\(xxxhdpi\) \(file\) [^ ]+' | awk '{print $3}' | head -1)
+          LEG=$("$AAPT2" dump resources "../$APK" | grep -A8 "mipmap/ic_launcher$" | grep -oE "\(xxxhdpi\) \(file\) [^ ]+" | awk "{print \$3}" | head -1)
           echo "== LEGACY $LEG"; [ -n "$LEG" ] && base64 -w0 "$LEG" && echo
+          true
