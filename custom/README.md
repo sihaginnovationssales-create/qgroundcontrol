@@ -19,6 +19,7 @@ Built against QGroundControl `master` commit `6eb58f0` (6 Nov 2026).
 | In-app logos | Barasinghas badge: toolbar, app menu, settings (single-color version), GCS marker on the map | `res/Images/QGCLogo*.svg` |
 | Android | Launcher icons, adaptive icon, splash icon, app label | `android/` (merged over upstream `android/`) |
 | Windows / macOS / Linux | App icons, installer header, `.desktop`, AppStream metadata | `deploy/` |
+| Fly view toolbar | "12 Armoured" shown beside the logo (top-left of the main screen); tapping it opens the same menu as the logo | `qml/FlyViewToolBar.qml` |
 | Update prompt | Off (custom builds never check QGC's server); "Update" link → your domain | `src/CustomPlugin.h` |
 
 Search for `TODO(12A)` to find the remaining placeholders (domain, AppStream screenshot).
@@ -91,8 +92,14 @@ You can also replace files directly at the same paths, sizes and formats:
 
 ## Updating to a newer QGroundControl
 
-`android/AndroidManifest.xml` is a copy of upstream with only the two `android:label`
-values changed. After pulling a new QGC, re-copy it and set the labels again. Re-apply
+Two files are copies of upstream with a small addition. After pulling a new QGC, re-copy
+them and re-apply the change:
+
+- `android/AndroidManifest.xml`: only the two `android:label` values differ.
+- `qml/FlyViewToolBar.qml` (from `src/Toolbar/FlyViewToolBar.qml`): adds
+  `import QGroundControl.Toolbar` and the app-name label marked "12 Armoured".
+
+If you skip this, the app still builds, but those files won't get upstream fixes. Re-apply
 `12armoured-core.patch` if the three core edits don't merge cleanly.
 
 ## License

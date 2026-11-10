@@ -57,6 +57,19 @@ qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_brand
 )
 
 # ============================================================================
+# QML overrides, served by the same interceptor in place of the upstream file:
+# FlyViewToolBar.qml adds the app name beside the logo on the Fly view toolbar.
+# ============================================================================
+
+set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
+    PROPERTIES QT_RESOURCE_ALIAS "QGroundControl/Toolbar/FlyViewToolBar.qml"
+)
+qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_qml_overrides
+    PREFIX "/Custom/qml"
+    FILES "${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
+)
+
+# ============================================================================
 # Custom plugin sources (picked up by src/CMakeLists.txt)
 # ============================================================================
 
