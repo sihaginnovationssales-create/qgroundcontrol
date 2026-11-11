@@ -28,6 +28,8 @@ public:
     QQmlApplicationEngine *createQmlApplicationEngine(QObject *parent) final;
     /// Releases the url interceptor attached in createQmlApplicationEngine before the engine is destroyed.
     void destroyQmlApplicationEngine(QQmlApplicationEngine *qmlEngine) final;
+    /// Loads the main window, then lays the startup zoom animation (TwelveASplash.qml) over it.
+    void createRootWindow(QQmlApplicationEngine *qmlEngine) final;
     /// Where the "Update" link points. The version check itself is already off for custom builds.
     QString stableDownloadUrl() const final { return QStringLiteral(TWELVEA_DOWNLOAD_URL); }
 

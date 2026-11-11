@@ -147,6 +147,10 @@ write("res/Images/QGCLogoArrow.svg", (
     f'<image x="{36 - bx_w / 2:.2f}" y="26" width="{bx_w:.2f}" height="{bx_h}" preserveAspectRatio="xMidYMid meet" '
     f'xlink:href="data:image/png;base64,{b64png(arrow_badge)}"/>\n</svg>\n'))
 
+# Startup zoom animation (qml/TwelveASplash.qml) scales the badge to ~half the screen height,
+# so it gets its own high-resolution copy.
+fit(badge, 1000, 768).save(out("res/Images/SplashBadge.png"), optimize=True)
+
 # ---------------------------------------------------------------- 3. Android
 for dens, px in {"ldpi": 48, "mdpi": 48, "hdpi": 72, "xhdpi": 96, "xxhdpi": 144, "xxxhdpi": 144}.items():
     square(px, 0.96).save(out(f"android/res/mipmap-{dens}/ic_launcher.png"))

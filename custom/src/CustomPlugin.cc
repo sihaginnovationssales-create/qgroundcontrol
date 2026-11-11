@@ -5,6 +5,9 @@
 #include <QtCore/QFile>
 #include <QtGui/QGuiApplication>
 #include <QtQml/QQmlApplicationEngine>
+#include <QtQml/QQmlComponent>
+#include <QtQuick/QQuickItem>
+#include <QtQuick/QQuickWindow>
 
 QGC_LOGGING_CATEGORY(CustomLog, "Custom.CustomPlugin")
 
@@ -46,6 +49,33 @@ void CustomPlugin::destroyQmlApplicationEngine(QQmlApplicationEngine *qmlEngine)
     }
 
     QGCCorePlugin::destroyQmlApplicationEngine(qmlEngine);
+}
+
+void CustomPlugin::createRootWindow(QQmlApplicationEngine *qmlEngine)
+{
+    QGCCorePlugin::createRootWindow(qmlEngine);
+
+    const QList<QObject*> rootObjects = qmlEngine->rootObjects();
+    QQuickWindow *const window =
+        rootObjects.isEmpty() ? nullptr : qobject_cast<QQuickWindow*>(rootObjects.constFirst());
+    if (!window) {
+        qCWarning(CustomLog) << "No root window, skipping startup animation";
+        return;
+    }
+
+    // beginCreate/completeCreate so the overlay has its parent before its bindings first run.
+    QQmlComponent component(qmlEngine, QUrl(QStringLiteral("qrc:/Custom/qml/TwelveASplash.qml")));
+    QObject *const object = component.beginCreate(qmlEngine->rootContext());
+    QQuickItem *const splash = qobject_cast<QQuickItem*>(object);
+    if (!splash) {
+        qCWarning(CustomLog) << "Startup animation failed to load:" << component.errors();
+        delete object;
+        return;
+    }
+
+    splash->setParent(window->contentItem());
+    splash->setParentItem(window->contentItem());
+    component.completeCreate();
 }
 
 /*===========================================================================*/

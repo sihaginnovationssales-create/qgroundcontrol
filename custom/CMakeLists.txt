@@ -49,6 +49,7 @@ set(TWELVEA_BRAND_RESOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/res/Images/QGCLogoWhite.svg"
     "${CMAKE_CURRENT_SOURCE_DIR}/res/Images/QGCLogoArrow.svg"
     "${CMAKE_CURRENT_SOURCE_DIR}/res/icons/qgroundcontrol.ico"
+    "${CMAKE_CURRENT_SOURCE_DIR}/res/Images/SplashBadge.png"
 )
 qgc_set_qt_resource_alias(${TWELVEA_BRAND_RESOURCES})
 qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_brand
@@ -59,14 +60,20 @@ qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_brand
 # ============================================================================
 # QML overrides, served by the same interceptor in place of the upstream file:
 # FlyViewToolBar.qml adds the app name beside the logo on the Fly view toolbar.
+# TwelveASplash.qml is the startup zoom animation (loaded by CustomPlugin, not an override).
 # ============================================================================
 
 set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
     PROPERTIES QT_RESOURCE_ALIAS "QGroundControl/Toolbar/FlyViewToolBar.qml"
 )
+set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/TwelveASplash.qml"
+    PROPERTIES QT_RESOURCE_ALIAS "TwelveASplash.qml"
+)
 qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_qml_overrides
     PREFIX "/Custom/qml"
-    FILES "${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
+    FILES
+        "${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
+        "${CMAKE_CURRENT_SOURCE_DIR}/qml/TwelveASplash.qml"
 )
 
 # ============================================================================

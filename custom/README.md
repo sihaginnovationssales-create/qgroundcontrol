@@ -20,6 +20,7 @@ Built against QGroundControl `master` commit `6eb58f0` (6 Nov 2026).
 | Android | Launcher icons, adaptive icon, splash icon, app label | `android/` (merged over upstream `android/`) |
 | Windows / macOS / Linux | App icons, installer header, `.desktop`, AppStream metadata | `deploy/` |
 | Fly view toolbar | "12 Armoured" shown beside the logo (top-left of the main screen); tapping it opens the same menu as the logo | `qml/FlyViewToolBar.qml` |
+| Startup animation | The badge zooms up from the Android launch-screen size, then fades into the app (~1.9 s, tap to skip) | `qml/TwelveASplash.qml`, `res/Images/SplashBadge.png`, `CustomPlugin::createRootWindow` |
 | Update prompt | Off (custom builds never check QGC's server); "Update" link → your domain | `src/CustomPlugin.h` |
 
 Search for `TODO(12A)` to find the remaining placeholders (domain, AppStream screenshot).
@@ -89,6 +90,7 @@ You can also replace files directly at the same paths, sizes and formats:
 | `deploy/macos/TwelveArmoured.icns` | ICNS 16–1024 |
 | `deploy/linux/TwelveArmoured_256.png`, `TwelveArmoured.svg` | PNG 256, SVG |
 | `res/icons/store_512x512.png` | PNG 512 (Play Store listing) |
+| `res/Images/SplashBadge.png` | PNG, 768 px tall (startup zoom) |
 
 ## Updating to a newer QGroundControl
 
