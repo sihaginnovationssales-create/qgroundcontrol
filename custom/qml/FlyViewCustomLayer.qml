@@ -84,7 +84,7 @@ Item {
             anchors.left:           parent.left
             anchors.right:          parent.right
             anchors.top:            statusButton.bottom
-            anchors.bottom:         creditLabel.top
+            anchors.bottom:         parent.bottom
 
             QGCLabel {
                 anchors.centerIn:   parent
@@ -93,17 +93,6 @@ Item {
                 font.pointSize:     ScreenTools.largeFontPointSize
                 font.letterSpacing: ScreenTools.defaultFontPixelWidth * 0.6
             }
-        }
-
-        // Open-source attribution to the upstream project
-        QGCLabel {
-            id:                         creditLabel
-            anchors.horizontalCenter:   parent.horizontalCenter
-            anchors.bottom:             parent.bottom
-            anchors.bottomMargin:       _root._spacing * 0.5
-            text:                       qsTr("Based on QGroundControl")
-            color:                      _root._brandMuted
-            font.pointSize:             ScreenTools.smallFontPointSize
         }
 
         // Connection status, centred on the window (not on this layer, which starts below the toolbar)

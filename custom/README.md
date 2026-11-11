@@ -20,7 +20,7 @@ Built against QGroundControl `master` commit `6eb58f0` (6 Nov 2026).
 | Android | Launcher icons, adaptive icon, splash icon, app label | `android/` (merged over upstream `android/`) |
 | Windows / macOS / Linux | App icons, installer header, `.desktop`, AppStream metadata | `deploy/` |
 | Fly view toolbar | "12 Armoured" shown beside the logo (top-left of the main screen); tapping it opens the same menu as the logo | `qml/FlyViewToolBar.qml` |
-| Home (Fly view) screen | While no vehicle is connected, a 12 ARMOURED brand screen covers the map and flight widgets: badge with "12 ARMOURED", the status "DISCONNECTED – CLICK TO MANUALLY CONNECT" (charcoal, bronze border) in the exact centre (opens the usual connect panel), "GROUND CONTROL STATION" and a "Based on QGroundControl" credit. The toolbar status pill is hidden meanwhile. On connect, the map and widgets return unchanged | `qml/FlyViewCustomLayer.qml`, `qml/FlyViewToolBar.qml` |
+| Home (Fly view) screen | While no vehicle is connected, a 12 ARMOURED brand screen covers the map and flight widgets: badge with "12 ARMOURED", the status "DISCONNECTED – CLICK TO MANUALLY CONNECT" (charcoal, bronze border) in the exact centre (opens the usual connect panel) and "GROUND CONTROL STATION". The toolbar status pill is hidden meanwhile. On connect, the map and widgets return unchanged | `qml/FlyViewCustomLayer.qml`, `qml/FlyViewToolBar.qml` |
 | Startup animation | The badge zooms up from the Android launch-screen size, then fades into the app (~1.9 s, tap to skip) | `qml/TwelveASplash.qml`, `res/Images/SplashBadge.png`, `CustomPlugin::createRootWindow` |
 | Update prompt | Off (custom builds never check QGC's server); "Update" link → your domain | `src/CustomPlugin.h` |
 
@@ -111,4 +111,5 @@ If you skip this, the app still builds, but those files won't get upstream fixes
 ## License
 
 QGroundControl is dual-licensed Apache-2.0 / GPLv3. All upstream license files and
-headers are unchanged; keep them, and keep the "Based on QGroundControl" credit.
+headers are unchanged; keep them. The "Based on QGroundControl" credit stays in the app's
+copyright metadata (`QGC_APP_COPYRIGHT`); it is not shown on screen.
