@@ -20,6 +20,7 @@ Built against QGroundControl `master` commit `6eb58f0` (6 Nov 2026).
 | Android | Launcher icons, adaptive icon, splash icon, app label | `android/` (merged over upstream `android/`) |
 | Windows / macOS / Linux | App icons, installer header, `.desktop`, AppStream metadata | `deploy/` |
 | Fly view toolbar | "12 Armoured" shown beside the logo (top-left of the main screen); tapping it opens the same menu as the logo | `qml/FlyViewToolBar.qml` |
+| Home (Fly view) screen | While no vehicle is connected, a 12 ARMOURED brand screen covers the map and flight widgets: badge with "12 ARMOURED", the status "DISCONNECTED – CLICK TO MANUALLY CONNECT" (charcoal, bronze border) in the exact centre (opens the usual connect panel), "GROUND CONTROL STATION" and a "Based on QGroundControl" credit. The toolbar status pill is hidden meanwhile. On connect, the map and widgets return unchanged | `qml/FlyViewCustomLayer.qml`, `qml/FlyViewToolBar.qml` |
 | Startup animation | The badge zooms up from the Android launch-screen size, then fades into the app (~1.9 s, tap to skip) | `qml/TwelveASplash.qml`, `res/Images/SplashBadge.png`, `CustomPlugin::createRootWindow` |
 | Update prompt | Off (custom builds never check QGC's server); "Update" link → your domain | `src/CustomPlugin.h` |
 
@@ -99,7 +100,10 @@ them and re-apply the change:
 
 - `android/AndroidManifest.xml`: only the two `android:label` values differ.
 - `qml/FlyViewToolBar.qml` (from `src/Toolbar/FlyViewToolBar.qml`): adds
-  `import QGroundControl.Toolbar` and the app-name label marked "12 Armoured".
+  `import QGroundControl.Toolbar` and the two changes marked "12 Armoured".
+
+`qml/FlyViewCustomLayer.qml` replaces upstream's empty customization layer; keep its three
+interface properties in step with upstream's `src/FlyView/FlyViewCustomLayer.qml`.
 
 If you skip this, the app still builds, but those files won't get upstream fixes. Re-apply
 `12armoured-core.patch` if the three core edits don't merge cleanly.

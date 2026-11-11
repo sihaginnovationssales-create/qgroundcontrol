@@ -60,11 +60,15 @@ qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_brand
 # ============================================================================
 # QML overrides, served by the same interceptor in place of the upstream file:
 # FlyViewToolBar.qml adds the app name beside the logo on the Fly view toolbar.
+# FlyViewCustomLayer.qml shows the 12 ARMOURED brand screen over the map while disconnected.
 # TwelveASplash.qml is the startup zoom animation (loaded by CustomPlugin, not an override).
 # ============================================================================
 
 set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
     PROPERTIES QT_RESOURCE_ALIAS "QGroundControl/Toolbar/FlyViewToolBar.qml"
+)
+set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewCustomLayer.qml"
+    PROPERTIES QT_RESOURCE_ALIAS "QGroundControl/FlyView/FlyViewCustomLayer.qml"
 )
 set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/qml/TwelveASplash.qml"
     PROPERTIES QT_RESOURCE_ALIAS "TwelveASplash.qml"
@@ -73,6 +77,7 @@ qt_add_resources(${CMAKE_PROJECT_NAME} twelvea_qml_overrides
     PREFIX "/Custom/qml"
     FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewToolBar.qml"
+        "${CMAKE_CURRENT_SOURCE_DIR}/qml/FlyViewCustomLayer.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/TwelveASplash.qml"
 )
 

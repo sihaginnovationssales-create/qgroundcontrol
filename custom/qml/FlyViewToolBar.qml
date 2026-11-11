@@ -1,6 +1,7 @@
 // 12 Armoured override of src/Toolbar/FlyViewToolBar.qml (served by CustomPlugin's URL interceptor).
 // Identical to upstream except the "import QGroundControl.Toolbar" line (needed outside the module
-// directory) and the app-name label marked "12 Armoured". Re-copy after updating QGroundControl.
+// directory) and the two changes marked "12 Armoured" (app-name label, status pill hidden while
+// disconnected). Re-copy after updating QGroundControl.
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -107,6 +108,8 @@ Item {
                             id:                 mainStatusIndicator
                             objectName:         "toolbar_mainStatusIndicator"
                             Layout.fillHeight:  true
+                            // 12 Armoured: the disconnected status is shown centred on the brand screen
+                            visible:            !!_activeVehicle
                         }
                     }
 
