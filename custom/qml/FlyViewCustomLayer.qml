@@ -16,11 +16,11 @@ Item {
     property var customOccluders: []
     property var mapControl
 
-    // Brand colors from the Barasinghas badge, deliberately fixed rather than theme colors
+    // Brand colors from the 12 Armoured crest, deliberately fixed rather than theme colors
     readonly property color _brandBackground:   "#121212"
     readonly property color _brandCharcoal:     "#1C1C1C"
-    readonly property color _brandBronze:       "#C9A45C"
-    readonly property color _brandMuted:        "#8A7A5C"
+    readonly property color _brandGold:         "#E7B321"
+    readonly property color _brandMuted:        "#9C8440"
 
     readonly property bool _vehicleConnected:   !!QGroundControl.multiVehicleManager.activeVehicle
     // FlyView insets this layer from the window by the toolbar height plus this widget margin
@@ -70,7 +70,7 @@ Item {
                 QGCLabel {
                     anchors.verticalCenter: parent.verticalCenter
                     text:                   qsTr("12 ARMOURED")
-                    color:                  _root._brandBronze
+                    color:                  _root._brandGold
                     font.pointSize:         ScreenTools.largeFontPointSize * 2.4
                     font.bold:              true
                     font.letterSpacing:     ScreenTools.defaultFontPixelWidth * 0.4
@@ -106,14 +106,14 @@ Item {
             radius:                     height / 2
             color:                      statusMouseArea.pressed ? Qt.lighter(_root._brandCharcoal, 1.6)
                                                                 : _root._brandCharcoal
-            border.color:               _root._brandBronze
+            border.color:               _root._brandGold
             border.width:               Math.max(2, ScreenTools.defaultFontPixelWidth * 0.2)
 
             QGCLabel {
                 id:                 statusLabel
                 anchors.centerIn:   parent
                 text:               qsTr("DISCONNECTED – CLICK TO MANUALLY CONNECT")
-                color:              _root._brandBronze
+                color:              _root._brandGold
                 font.pointSize:     ScreenTools.largeFontPointSize
                 font.bold:          true
             }

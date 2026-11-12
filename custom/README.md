@@ -16,11 +16,11 @@ Built against QGroundControl `master` commit `6eb58f0` (6 Nov 2026).
 | Organization | 12 Armoured, `twelvearmoured.com` (placeholder) | `cmake/CustomOverrides.cmake` |
 | Package / bundle id | `com.twelvearmoured.groundcontrol` (Android, iOS, macOS, Windows, Linux) | `cmake/CustomOverrides.cmake` |
 | Copyright metadata | "© YEAR 12 Armoured. Based on QGroundControl…" | `cmake/CustomOverrides.cmake` |
-| In-app logos | Barasinghas badge: toolbar, app menu, settings (single-color version), GCS marker on the map | `res/Images/QGCLogo*.svg` |
+| In-app logos | Official 12 Armoured crest: toolbar, app menu, settings (single-color version), GCS marker on the map | `res/Images/QGCLogo*.svg` |
 | Android | Launcher icons, adaptive icon, splash icon, app label | `android/` (merged over upstream `android/`) |
 | Windows / macOS / Linux | App icons, installer header, `.desktop`, AppStream metadata | `deploy/` |
 | Fly view toolbar | "12 Armoured" shown beside the logo (top-left of the main screen); tapping it opens the same menu as the logo | `qml/FlyViewToolBar.qml` |
-| Home (Fly view) screen | While no vehicle is connected, a 12 ARMOURED brand screen covers the map and flight widgets: badge with "12 ARMOURED", the status "DISCONNECTED – CLICK TO MANUALLY CONNECT" (charcoal, bronze border) in the exact centre (opens the usual connect panel) and "GROUND CONTROL STATION". The toolbar status pill is hidden meanwhile. On connect, the map and widgets return unchanged | `qml/FlyViewCustomLayer.qml`, `qml/FlyViewToolBar.qml` |
+| Home (Fly view) screen | While no vehicle is connected, a 12 ARMOURED brand screen covers the map and flight widgets: badge with "12 ARMOURED", the status "DISCONNECTED – CLICK TO MANUALLY CONNECT" (charcoal, gold border) in the exact centre (opens the usual connect panel) and "GROUND CONTROL STATION". The toolbar status pill is hidden meanwhile. On connect, the map and widgets return unchanged | `qml/FlyViewCustomLayer.qml`, `qml/FlyViewToolBar.qml` |
 | Startup animation | The badge zooms up from the Android launch-screen size, then fades into the app (~1.9 s, tap to skip) | `qml/TwelveASplash.qml`, `res/Images/SplashBadge.png`, `CustomPlugin::createRootWindow` |
 | Update prompt | Off (custom builds never check QGC's server); "Update" link → your domain | `src/CustomPlugin.h` |
 
@@ -65,18 +65,21 @@ on a fork (fine for sideloading; use your own keystore for Play Store).
 
 ## Logo artwork
 
-Every logo and icon is generated from one photo of the Barasinghas badge
-(`tools/badge_source.jpg`) by `tools/gen_brand_from_image.py`. The script cuts the shield
-out of the photo, embeds it as a PNG inside the in-app SVGs (Qt's VectorImage and QtSvg
-both render embedded images), makes a single-color silhouette for the tinted Settings
-icon, and writes every platform icon. To change the logo, replace the photo and rerun:
+Every logo and icon is generated from the official 12 Armoured crest (`tools/logo_source.jpg`,
+artwork on a white page) by `tools/gen_brand_from_image.py`. The script removes the white
+background by flood fill from the border (white inside the crest, such as the "12", the pennants
+and the motto, is kept) and un-blends the anti-aliased rim, embeds the result as a PNG inside the
+in-app SVGs (Qt's VectorImage and QtSvg both render embedded images), makes a single-color
+silhouette for the tinted Settings icon, and writes every platform icon. To change the logo,
+replace the image and rerun:
 
 ```bash
-python3 custom/tools/gen_brand_from_image.py custom/tools/badge_source.jpg custom /tmp/brand
+python3 custom/tools/gen_brand_from_image.py custom/tools/logo_source.jpg custom /tmp/brand --white-bg
 ```
 
-(needs opencv-python, numpy, Pillow, fontTools and `rsvg-convert`). A vector (SVG) master
-of the badge would give sharper results at very small and very large sizes than a photo.
+(needs opencv-python, numpy, Pillow, fontTools and `rsvg-convert`; omit `--white-bg` for a convex
+badge photographed on a background). A vector (SVG) master of the crest would be sharper still
+at very small and very large sizes.
 You can also replace files directly at the same paths, sizes and formats:
 
 | File | Format / size |
