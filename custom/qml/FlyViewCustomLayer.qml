@@ -55,10 +55,12 @@ Item {
             anchors.margins:        _root._spacing * 0.5
 
             Row {
+                id:                 brandRow
                 anchors.centerIn:   parent
                 spacing:            _root._spacing
 
                 Image {
+                    id:         brandLogo
                     height:     Math.min(brandArea.height, ScreenTools.defaultFontPixelHeight * 14)
                     width:      height * sourceSize.width / Math.max(1, sourceSize.height)
                     source:     "qrc:/Custom/res/SplashBadge.png"
@@ -67,13 +69,19 @@ Item {
                     mipmap:     true
                 }
 
+                // Shrinks to fit beside the crest on narrow screens instead of running off the edge
                 QGCLabel {
                     anchors.verticalCenter: parent.verticalCenter
-                    text:                   qsTr("12 ARMOURED")
+                    width:                  Math.min(implicitWidth,
+                                                     brandArea.width - brandLogo.width - brandRow.spacing)
+                    text:                   qsTr("12 ARMOURED REGIMENT")
                     color:                  _root._brandGold
-                    font.pointSize:         ScreenTools.largeFontPointSize * 2.4
+                    font.pointSize:         ScreenTools.largeFontPointSize * 1.9
                     font.bold:              true
                     font.letterSpacing:     ScreenTools.defaultFontPixelWidth * 0.4
+                    fontSizeMode:           Text.HorizontalFit
+                    minimumPointSize:       ScreenTools.mediumFontPointSize
+                    elide:                  Text.ElideNone
                 }
             }
         }
